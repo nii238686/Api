@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="profile-card">
+        <input type="text" placeholder="Enter Username">
+        <button class="search">Search</button>
+        <div class="main-content">
+         
+        </div>
+  
+
+    
+    </div>
+    <script>
+const search=document.querySelector(".search")
+const input=document.querySelector("input")
+const maincontent=document.querySelector(".main-content")
+        const getDataFromApi=async(Username)=>{
+
+     const response= await fetch('https://api.github.com/users/'+Username)
+         const users= await  response.json()
+       
+
+   
+
+         const year = new Date(users.created_at).getFullYear();
+         const update = new Date(users.updated_at).getFullYear();
+         
+      if(users.name==null ||users.name==undefined){
+
+        alert("Please enter valid username")
+        return
+      }
+      else{
+        maincontent.innerHTML=`   <div class="image">
+                <img src="${users.avatar_url}" alt="" class="profile-img">
+            </div>
+            
+            <div class="text-data">
+                <div class="name">
+                    <label>Name:</label>
+                    <span class="name">${users.name}</span>
+                </div>
+                <div class="usr">
+                    <label>login:</label>
+                    <span class="name"> ${users.login}</span>
+                </div>
+                <div class="doj">
+                    <label>Date of joining:</label>
+                    <span class="name">${year}</span>
+                </div>
+                <div class="flg">
+                    <label> Following:</label>
+                    <span class="name">${users.following
+}</span>
+                </div>
+                <div class="flrs">
+                    <label>Followers:</label>
+                    <span class="name">${users.followers}</span>
+                </div>
+                <div class="lasup">
+                    <label> Last updated:</label>
+                    <span class="name">${update}</span>
+                </div>
+                <div class="rep">
+                    <label>Repository:</label>
+                    <span class="name">${users.public_repos}</span>
+                </div>
+            </div>`
+      
+
+
+      }
+        
+
+
+
+        }
+
+        search.addEventListener("click",()=>{
+         const username=input.value
+
+
+           if(username==''){
+           alert("Please enter a avalue")
+           return
+           }
+        
+           else{
+            getDataFromApi(username)
+            input.value=''
+           }
+     
+
+        })
+    
+     
+    </script> 
+</body>
+</html>
